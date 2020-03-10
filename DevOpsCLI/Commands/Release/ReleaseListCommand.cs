@@ -58,10 +58,15 @@ namespace Jmelosegui.DevOpsCLI.Commands
         {
             base.OnExecute(app);
 
-            Enum.TryParse(
+            EnvironmentStatus filterStatus = EnvironmentStatus.Undefined;
+
+            if (this.EnvironmentStatusFilter != null)
+            {
+                Enum.TryParse(
                     value: string.Join(',', this.EnvironmentStatusFilter),
                     ignoreCase: true,
-                    out EnvironmentStatus filterStatus);
+                    out filterStatus);
+            }
 
             var releaseListRequest = new ReleaseListRequest
             {
