@@ -9,6 +9,7 @@ namespace Jmelosegui.DevOpsCLI.Commands
     using McMaster.Extensions.CommandLineUtils;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     [Command("create", Description = "Request (create) a release given a release definition.")]
     public class ReleaseCreateCommand : CommandBase
@@ -44,7 +45,7 @@ namespace Jmelosegui.DevOpsCLI.Commands
 
         [Option(
             "-arts|--artifacts",
-            "Artifacts",
+            "Json string that represent the list of ArtifactsMetadata that will be use in the release(i.e [{'Alias': 'artifact-alias', 'Id': 'artifact-id'}])",
             CommandOptionType.SingleValue)]
         public string Artifacts { get; private set; }
 
@@ -75,7 +76,23 @@ namespace Jmelosegui.DevOpsCLI.Commands
 
             if (!string.IsNullOrEmpty(this.Artifacts))
             {
-                request.Artifacts = JsonConvert.DeserializeObject<List<ReleaseArtifactMetadata>>(this.Artifacts);
+                dynamic artifacts = JArray.Parse(this.Artifacts);
+
+                List<ReleaseArtifactMetadata> releaseArtifactMetadataList = new List<ReleaseArtifactMetadata>();
+                foreach (var artifact in artifacts)
+                {
+                    releaseArtifactMetadataList.Add(
+                        new ReleaseArtifactMetadata
+                        {
+                            Alias = artifact.Alias,
+                            InstanceReference = new BuildVersion
+                            {
+                                Id = artifact.Id,
+                            },
+                        });
+                }
+
+                request.Artifacts = releaseArtifactMetadataList;
             }
 
             var result = this.DevOpsClient.Release.CreateAsync(this.ProjectName, request).Result;
