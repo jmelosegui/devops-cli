@@ -43,6 +43,12 @@ namespace Jmelosegui.DevOpsCLI.Commands
         public bool IsDraft { get; set; }
 
         [Option(
+            "-arts|--artifacts",
+            "Artifacts",
+            CommandOptionType.SingleValue)]
+        public string Artifacts { get; private set; }
+
+        [Option(
             "-e|--environment",
             "Manual Environment",
             CommandOptionType.MultipleValue)]
@@ -66,6 +72,11 @@ namespace Jmelosegui.DevOpsCLI.Commands
                 ManualEnvironments = this.ManualEnvironments,
                 Reason = this.Reason,
             };
+
+            if (!string.IsNullOrEmpty(this.Artifacts))
+            {
+                request.Artifacts = JsonConvert.DeserializeObject<List<ReleaseArtifactMetadata>>(this.Artifacts);
+            }
 
             var result = this.DevOpsClient.Release.CreateAsync(this.ProjectName, request).Result;
 
