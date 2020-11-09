@@ -3,12 +3,10 @@
 
 namespace Jmelosegui.DevOps.Client
 {
-    public class Build
+    public class ReleaseArtifactMetadata
     {
-        public int Id { get; set; }
+        public string Alias { get; set; }
 
-        public string BuildNumber { get; set; }
-
-        public BuildDefinition Definition { get; set; }
+        public BuildVersion InstanceReference { get; set; }
     }
 }
