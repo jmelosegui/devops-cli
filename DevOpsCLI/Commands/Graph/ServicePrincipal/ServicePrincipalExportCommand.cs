@@ -5,7 +5,7 @@ namespace Jmelosegui.DevOpsCLI.Commands.Graph.ServicePrincipal
 {
     using System;
     using System.Linq;
-    using Jmelosegui.DevOps;
+    using Jmelosegui.DevOps.Client;
     using McMaster.Extensions.CommandLineUtils;
     using Microsoft.Extensions.Logging;
 

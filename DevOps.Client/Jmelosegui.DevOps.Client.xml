@@ -80,7 +80,7 @@
             Retrieve a Service Principal.
             </summary>
             <param name="request">Payload used in the request <see cref="T:Jmelosegui.DevOps.Client.GraphServicePrincipalListRequest"/>.</param>
-            <returns>IEnumerable of <see cref="T:Jmelosegui.DevOps.GraphServicePrincipal"/>.</returns>
+            <returns>IEnumerable of <see cref="T:Jmelosegui.DevOps.Client.GraphServicePrincipal"/>.</returns>
         </member>
         <member name="M:Jmelosegui.DevOps.Client.GraphApiClient.UserGetAllAsync(Jmelosegui.DevOps.Client.GraphUserListRequest)">
             <summary>
