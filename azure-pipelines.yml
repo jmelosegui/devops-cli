@@ -1,7 +1,8 @@
 trigger:
 - master
 
-pool: 'Default'
+pool:
+  vmImage: ubuntu-latest
 
 variables:
   solution: '$(Build.SourcesDirectory)/Jmelosegui.DevOpsCLI.sln'
